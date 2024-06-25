@@ -70,6 +70,7 @@ const ImageRef = useRef(null);
           name='caption'
           type="text"
           placeholder="Enter caption"
+          autoComplete='off'
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
         />

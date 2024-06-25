@@ -74,6 +74,7 @@ const uploadComment = async (postId, userId, comment , userImg) => {
       <img className='comment-profile-img' src={session.user.image} alt={session.user.username} />
       <input
         className='comment-input'
+        autoComplete='off'
         type="text"
         placeholder="Add a comment..."
         value={comment}
