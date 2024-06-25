@@ -1,0 +1,58 @@
+.Header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    position: fixed;
+    background-color: white;
+    height: 2rem;
+    width: 97%;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    box-shadow: 0 5px 8px -9px rgba(0, 0, 0, 0.75)
+}
+.left{
+    display: flex;
+    align-items: center
+}
+.login-btn , .post-btn{
+    border: none;
+    outline: none;
+    background-color: white;
+    color: blue;
+}
+
+ .post-btn{
+    color: black;
+}
+.search{
+    height: 2rem;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    width: 15rem;
+    margin-left: 1rem;
+    padding-left: 1rem;
+}
+.right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.post{
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+.post:hover{
+    cursor: pointer;
+}
+.btn{
+    color: black;
+}
+.header-profile-img{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    margin-left: 1rem;
+}

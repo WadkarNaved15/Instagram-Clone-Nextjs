@@ -1,0 +1,47 @@
+.side-profile-page{
+    height: 100vh;
+    width: 27%;
+    position: fixed;
+    top: 4.5rem;
+    right: 0;
+    border: 1px solid lightgray;
+    overflow-y: scroll;
+   
+}
+.side-profile{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0.5rem;
+    height: 4rem;
+    border: 1px solid lightgray;
+}
+.profile-img{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+}
+.username{
+    color: black;
+    text-decoration: none;
+}
+.posts{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0.2rem;
+    border: 1px solid lightgray;
+}
+.image{
+    height: 15rem;
+    width: 100%;
+    object-fit: cover;
+    padding: 1rem;
+}
+.sign-out-btn{
+    border: none;
+    outline: none;
+    background-color: white;
+    color: blue;
+}

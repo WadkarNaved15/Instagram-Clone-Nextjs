@@ -1,0 +1,39 @@
+.feed{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 4.5rem;
+    height: calc(100vh - 4.5rem);
+    width : 100%;
+    overflow-y: scroll;
+}
+.feed-section{
+    grid-column :span 2;
+
+}
+.side-profile-section{
+    grid-column: span 1;
+}
+button:hover{
+    cursor: pointer;
+}
+button:disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+    background-color: lightgray;
+    color: black;
+    padding: 0.5rem;
+}
+
+
+@media (max-width: 768px) {
+    .feed-section{
+        grid-column :span 3;
+    }
+    .side-profile-section{
+        display: none;
+    }
+}

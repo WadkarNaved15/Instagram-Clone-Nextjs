@@ -1,0 +1,75 @@
+.main-post{
+    
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    margin-left: 1rem;
+}
+
+.post-header{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 95%;
+    padding: 0.5rem;
+    border: 1px solid lightgray;
+    box-shadow: 0px -9px 8px -9px rgba(0, 0, 0, 0.75);
+}
+.post-img-container{
+    width: 95%;
+    padding: 0.5rem;
+    border: 1px solid lightgray;
+}
+.post-img{
+    height: 25rem;
+    width: 95%;
+    object-fit: contain;
+    padding: 0.5rem;
+    
+}
+.main-profile-img{
+    height: 3.5rem;
+    width: 3.5rem;
+    border-radius: 50%;
+    margin-left: 1rem;
+}
+.main-profile-name{
+    margin-left: 1.5rem;
+}
+.interaction{
+    width: 95%;
+    padding: 0.5rem;
+    border: 1px solid lightgray;
+}
+.likes-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 1.5rem;
+}
+.likes{
+    margin-left: 0.7rem;
+}
+.caption-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 95%;
+    padding-left: 1rem;
+    margin-top: -1.25rem;
+    
+}
+.caption{
+    margin-left: 0.5rem;
+}
+.red{
+    color: red;
+}
+.white{
+    color: white;
+    border: 1px solid black;
+}
+
+.heart:hover{
+    cursor: pointer;
+}
