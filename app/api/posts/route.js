@@ -24,8 +24,8 @@ async function handler(req, res) {
     const posts = await collection.find({ profileId }).toArray();
     return NextResponse.json(posts);
   } catch (error) {
-    console.error('Error fetching posts:', error);
-    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+    
+    return NextResponse.json({ message: error }, { status: 500 });
   }
 }
 
