@@ -10,7 +10,7 @@ const Profile = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    if (!session) return; // Ensure session is available before fetching posts
+    if (!session) return;
 
     const fetchPosts = async () => {
       try {

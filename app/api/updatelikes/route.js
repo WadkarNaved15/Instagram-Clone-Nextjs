@@ -10,7 +10,7 @@ export async function POST(req, res) {
   }
 
   const { client, db } = await connectToDatabase();
-  const collection = db.collection('Posts'); // Replace with your collection name
+  const collection = db.collection('Posts'); 
 
   try {
     const post = await collection.findOne({ _id: new ObjectId(postId) });

@@ -22,7 +22,7 @@ export async function POST(req, res) {
     const path = `public/uploads/${Date.now()}${file.name}`;
     await fs.promises.writeFile(path, buffer);
     const { client, db } = await connectToDatabase();
-    const collection = db.collection('Posts'); // Replace with your collection name
+    const collection = db.collection('Posts'); 
    
     const uploadData = {
         username : session.user.name,

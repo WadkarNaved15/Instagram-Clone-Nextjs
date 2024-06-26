@@ -1,4 +1,3 @@
-// pages/api/posts.js
 
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';

@@ -22,7 +22,7 @@ const Post = ({ post }) => {
 
   const updateLikes = async () => {
     if (!session || isUpdating) return; // Prevent multiple updates
-    setIsUpdating(true); // Set updating status
+    setIsUpdating(true); 
 
     try {
       const newLikedStatus = !liked;
@@ -35,13 +35,11 @@ const Post = ({ post }) => {
       });
 
       if (!response.data.success) {
-        // Revert UI changes if update fails
         setLiked(!newLikedStatus);
         setLikesCount(newLikedStatus ? likesCount - 1 : likesCount + 1);
       }
     } catch (error) {
       console.error("Error liking post:", error);
-      // Revert UI changes on error
       setLiked(!liked);
       setLikesCount(liked ? likesCount + 1 : likesCount - 1);
     } finally {

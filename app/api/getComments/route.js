@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET(req) {
   try {
-    // Get the postId from query parameters
+
     const { searchParams } = new URL(req.url);
     const postId = searchParams.get('postId');
 
@@ -11,9 +11,8 @@ export async function GET(req) {
       return NextResponse.json({ message: 'postId is required' }, { status: 400 });
     }
 
-    // Connect to the MongoDB client
     const { client, db } = await connectToDatabase();
-    const collection = db.collection('Comments'); // Replace with your collection name
+    const collection = db.collection('Comments'); 
 
     // Find comments for the given postId
     const comments = await collection.find({ postId: postId }).sort({ createdAt: -1 }).toArray();

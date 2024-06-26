@@ -1,4 +1,3 @@
-// pages/api/health.js
 
 import { connectToDatabase } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
