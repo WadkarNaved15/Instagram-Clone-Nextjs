@@ -51,7 +51,7 @@ const SideProfile = () => {
         <div className="posts">
           {posts.map((post) => (
             <div key={post._id} className='side-post'>
-              <img className="image" src={post.imageUrl.toString().substring(7)} alt={post.caption} />
+              <img className="image" src={post.imageUrl} alt={post.caption} />
             </div>
           ))}
         </div>

@@ -13,6 +13,7 @@ const UploadModal = ({ isOpen, onClose }) => {
   const [file, setFile] = useState(null);
   const [caption, setCaption] = useState('');
   const[ImageUrl, setImageUrl] = useState(null);
+  const [uploading, setUploading] = useState(false);
 const ImageRef = useRef(null);
 
   const handleFileChange = (e) => {
@@ -32,6 +33,7 @@ const ImageRef = useRef(null);
     formData.append('file', file);
     formData.append('caption', caption);
     formData.append("imageUrl", ImageUrl);
+    setUploading(true);
     const response = await axios.post('/api/upload', formData);
 
     if (response.data.success) {  
@@ -41,6 +43,7 @@ const ImageRef = useRef(null);
       
     }
     location.reload();
+    setUploading(false);
     onClose();
 
   };
@@ -74,7 +77,7 @@ const ImageRef = useRef(null);
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
         />
-        <button disabled={!file  || !session} className={` submit  ${!file ? 'lightblue' : ''}`} type='submit' onClick={handleSubmit}>Upload</button>
+        <button disabled={!file  || !session || uploading} className={` submit  ${!file ? 'lightblue' : ''}`} type='submit' onClick={handleSubmit}>{uploading ? 'Uploading...' : 'Upload'}</button>
         </form>
   
     </Modal>

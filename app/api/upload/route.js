@@ -1,8 +1,10 @@
 
 import fs from 'fs';
 import { ObjectId } from 'mongodb';
+import { uploadImage } from '@/lib/cloudinary';
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
+import { deleteImage } from '@/lib/cloudinary';
 import { getServerSession } from 'next-auth';
 
 export async function POST(req, res) {
@@ -15,45 +17,44 @@ export async function POST(req, res) {
     if (!file) {
         return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const path = `public/uploads/${Date.now()}${file.name}`;
-    await fs.promises.writeFile(path, buffer);
-    const { client, db } = await connectToDatabase();
-    const collection = db.collection('Posts'); 
-   
-    const uploadData = {
-        username : session.user.name,
-        profileId : session.user.email.split('@')[0],
-        profileImg : session.user.image,
-        caption: caption || '',
-        imageUrl: path,
-        likes : [],
-        uploadedAt: new Date(),
-    };
-    const result = await collection.insertOne(uploadData);
-    return NextResponse.json({succes:true});
+    try{
+        const image = await uploadImage(file);
+        const { client, db } = await connectToDatabase();
+        const collection = db.collection('Posts'); 
+    
+        const uploadData = {
+            username : session.user.name,
+            profileId : session.user.email.split('@')[0],
+            profileImg : session.user.image,
+            imageUrl : image?.secure_url,
+            public_id : image?.public_id,
+            caption: caption || '',
+            likes : [],
+            uploadedAt: new Date(),
+        };
+        const result = await collection.insertOne(uploadData);
+        return NextResponse.json({message: "image uploaded successfully", result}, { status: 200 });
+    }catch(error){
+        console.log(error)
+        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+    }
     }
 
 export async function DELETE(req, res) {
   try {
-    const { id , imageUrl} = await req.json(); // Assuming id is sent in the request body
+    const { id , public_id} = await req.json(); 
     const { client, db } = await connectToDatabase();
-    const collection = db.collection('Posts'); // Replace with your collection name
-    console.log(id,imageUrl)
-    // Step 1: Delete document from MongoDB
+    const collection = db.collection('Posts'); 
+
+    const dimage = await deleteImage(public_id);
+    
     const result = await collection.deleteOne({ _id:new ObjectId(id) });
 
     if (result.deletedCount !== 1) {
         
-      return NextResponse.json({ success: false, message: 'Post not found' }, { status: 404 });
+      return NextResponse.json({ success: false, message: 'Post not found in database' }, { status: 404 });
       
     }
-
-    // const filePath = imageUrl
-    // await fs.unlink(filePath);
-
-    // Step 3: Return success response
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting post and file:', error);

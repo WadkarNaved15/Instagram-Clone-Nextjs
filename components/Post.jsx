@@ -10,7 +10,8 @@ const Post = ({ post }) => {
   const { data: session } = useSession();
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(post.likes.length);
-  const [isUpdating, setIsUpdating] = useState(false); // Track the update status
+  const [isUpdating, setIsUpdating] = useState(false); 
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     if (session && post.likes.includes(session.user.username)) {
@@ -49,14 +50,17 @@ const Post = ({ post }) => {
 
   const handleSubmit = async (postId) => {
     try {
+      setIsDeleting(true);
       await axios.delete('/api/upload',{data:{
         id: post._id,
-        imageUrl: post.imageUrl
+        public_id: post.public_id
       }
       });
     } catch (error) {
       console.error('Error deleting post:', error);
+      setIsDeleting(false);
     }
+    location.reload()
   };
 
   return (
@@ -67,10 +71,10 @@ const Post = ({ post }) => {
           <h3 className="main-profile-name">{post.profileId}</h3>
         </div>
         {session && session.user.username === post.profileId ? (
-        <button onClick={() => handleSubmit(post._id)} className="delete-btn">DELETE</button>) : null}
+        <button disabled={isDeleting} onClick={() => handleSubmit(post._id)} className="delete-btn">{isDeleting ? 'Deleting...' : 'Delete'}</button>) : null}
       </div>
       <div className="post-img-container">
-        <img className="post-img" src={post.imageUrl.toString().substring(7)} alt={post.caption} />
+        <img className="post-img" src={post.imageUrl} alt={post.caption} />
       </div>
       <div className="interaction">
         <div className="likes-container">
