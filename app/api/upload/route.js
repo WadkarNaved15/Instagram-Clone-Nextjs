@@ -1,7 +1,7 @@
 
 import fs from 'fs';
 import { NextResponse } from 'next/server';
-import clientPromise from '@/lib/mongodb';
+import { connectToDatabase } from '@/lib/mongodb';
 import { getServerSession } from 'next-auth';
 
 
@@ -21,8 +21,7 @@ export async function POST(req, res) {
     const buffer = Buffer.from(bytes);
     const path = `public/uploads/${Date.now()}${file.name}`;
     await fs.promises.writeFile(path, buffer);
-    const client = await clientPromise;
-    const db = client.db('Instagram-clone'); // Replace with your database name
+    const { client, db } = await connectToDatabase();
     const collection = db.collection('Posts'); // Replace with your collection name
    
     const uploadData = {

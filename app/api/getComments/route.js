@@ -1,4 +1,4 @@
-import clientPromise from '@/lib/mongodb';
+import { connectToDatabase } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
 export async function GET(req) {
@@ -12,8 +12,7 @@ export async function GET(req) {
     }
 
     // Connect to the MongoDB client
-    const client = await clientPromise;
-    const db = client.db('Instagram-clone'); // Replace with your database name
+    const { client, db } = await connectToDatabase();
     const collection = db.collection('Comments'); // Replace with your collection name
 
     // Find comments for the given postId

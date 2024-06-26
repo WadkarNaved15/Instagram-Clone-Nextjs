@@ -1,5 +1,5 @@
 // pages/api/posts.js
-import clientPromise from '@/lib/mongodb';
+import { connectToDatabase } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
 
@@ -9,8 +9,7 @@ async function handler(req, res) {
   }
 
   try {
-    const client = await clientPromise;
-    const db = client.db('Instagram-clone'); // Replace with your database name
+    const { client, db } = await connectToDatabase();
     const collection = db.collection('Posts'); // Replace with your collection name
     const posts = await collection.find({}).sort({ uploadedAt: -1 }).toArray();
     return NextResponse.json(posts);

@@ -1,4 +1,4 @@
-import clientPromise from '@/lib/mongodb';
+import { connectToDatabase } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 
@@ -9,8 +9,7 @@ export async function POST(req, res) {
     return NextResponse.json({ message: 'Missing postId or userId' }, { status: 400 });
   }
 
-  const client = await clientPromise;
-  const db = client.db('Instagram-clone'); // Replace with your database name
+  const { client, db } = await connectToDatabase();
   const collection = db.collection('Posts'); // Replace with your collection name
 
   try {

@@ -1,18 +1,18 @@
 // pages/api/health.js
 
-import clientPromise from '@/lib/mongodb';
+import { connectToDatabase } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
 async function handler(req, res) {
   try {
-    // Check if MongoDB client is initialized
-    if (!clientPromise) {
-      return NextResponse.json({ message: 'MongoDB client not initialized' }, { status: 500 });
+    const { client, db } = await connectToDatabase();
+
+    // Check if MongoDB client and database are initialized
+    if (!client || !db) {
+      return NextResponse.json({ message: 'MongoDB connection not established' }, { status: 500 });
     }
 
-    const client = await clientPromise;
-
-    // Manually check if client is connected or connecting
+    // Check if client is connected
     if (client && client.topology && client.topology.isConnected()) {
       return NextResponse.json({ message: 'Database connection established' });
     } else {
@@ -24,4 +24,4 @@ async function handler(req, res) {
   }
 }
 
-export {handler as GET};
+export { handler as GET };
