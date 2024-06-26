@@ -11,6 +11,9 @@ async function handler(req, res) {
   try {
     const session = await getServerSession();
     const profileId = session.user.email.split('@')[0];
+    if(!clientPromise){
+      return NextResponse.json({ message: 'MongoDB connection error' }, { status: 500 });
+    }
     const client = await clientPromise;
     const db = client.db('Instagram-clone'); // Replace with your database name
     const collection = db.collection('Posts'); // Replace with your collection name
