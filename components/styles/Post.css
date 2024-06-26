@@ -9,7 +9,7 @@
 .post-header{
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     width: 95%;
     padding: 0.5rem;
     border: 1px solid lightgray;
@@ -35,6 +35,16 @@
 }
 .main-profile-name{
     margin-left: 1.5rem;
+}
+.post-header-left{
+    display: flex;
+    align-items: center;
+}
+.delete-btn{
+    border: none;
+    outline: none;
+    background-color: white;
+    color: red;
 }
 .interaction{
     width: 95%;

@@ -47,11 +47,27 @@ const Post = ({ post }) => {
     }
   };
 
+  const handleSubmit = async (postId) => {
+    try {
+      await axios.delete('/api/upload',{data:{
+        id: post._id,
+        imageUrl: post.imageUrl
+      }
+      });
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
+  };
+
   return (
     <div className="main-post">
       <div className="post-header">
-        <img className="main-profile-img" src={post.profileImg} alt={post.profileId} />
-        <h3 className="main-profile-name">{post.profileId}</h3>
+        <div className="post-header-left">
+          <img className="main-profile-img" src={post.profileImg} alt={post.profileId} />
+          <h3 className="main-profile-name">{post.profileId}</h3>
+        </div>
+        {session && session.user.username === post.profileId ? (
+        <button onClick={() => handleSubmit(post._id)} className="delete-btn">DELETE</button>) : null}
       </div>
       <div className="post-img-container">
         <img className="post-img" src={post.imageUrl.toString().substring(7)} alt={post.caption} />
