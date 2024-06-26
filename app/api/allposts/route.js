@@ -1,21 +1,19 @@
-
 import { connectToDatabase } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
-
-async function handler(req, res) {
+export async function GET(req, res) {
   if (req.method !== 'GET') {
-    return res.status(405).json({ message: 'Method Not Allowed' });
+    return NextResponse.json({ message: 'Method Not Allowed' }, { status: 405 });
   }
 
   try {
-    const { client, db } = await connectToDatabase();
+    const { db } = await connectToDatabase();
     const collection = db.collection('Posts'); 
     const posts = await collection.find({}).sort({ uploadedAt: -1 }).toArray();
+
     return NextResponse.json(posts);
   } catch (error) {
+    console.error('Error fetching posts:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
-
-export {handler as GET};
