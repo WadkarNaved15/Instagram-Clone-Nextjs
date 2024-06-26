@@ -19,7 +19,7 @@ async function handler(req, res) {
     const { client, db } = await connectToDatabase();
     const collection = db.collection('Posts');
 
-    const posts = await collection.find({ profileId }).toArray();
+    const posts = await collection.find({ profileId }).sort({ uploadedAt: -1 }).toArray();
     return NextResponse.json(posts);
   } catch (error) {
     console.error('Error fetching posts:', error);

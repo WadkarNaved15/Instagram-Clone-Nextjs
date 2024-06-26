@@ -19,7 +19,7 @@ const Post = ({ post }) => {
     } else {
       setLiked(false);
     }
-  }, []);
+  }, [session, post.likes]);
 
   const updateLikes = async () => {
     if (!session || isUpdating) return; // Prevent multiple updates

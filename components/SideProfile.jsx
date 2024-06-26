@@ -32,7 +32,7 @@ const SideProfile = () => {
       <div className="side-profile">
         <div>
           <Link href="/profile">
-            <img className="profile-img" src={session.user.image} alt={session.user.name} />
+            <img className="side-profile-img" src={session.user.image} alt={session.user.name} />
           </Link>
         </div>
         
