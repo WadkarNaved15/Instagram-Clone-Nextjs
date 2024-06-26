@@ -26,7 +26,8 @@
     margin-left: 2rem;
 }
 .comments{
-    height: 7rem;
+    height: fit-content;
+    max-height: 7rem;
     overflow-y: auto;
 }
 .hidden{

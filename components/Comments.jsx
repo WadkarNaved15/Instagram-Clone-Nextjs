@@ -6,6 +6,7 @@ const CommentForm = ({ postId }) => {
   const { data: session } = useSession();
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
+  const [commentUploaded, setCommentUploaded] = useState(false);
 
   const getComments = async (postId) => {
     try {
@@ -23,7 +24,8 @@ const CommentForm = ({ postId }) => {
         setComments(fetchedComments);
           };
     loadComments();
-  }, [postId,comment]);
+
+  }, [postId, commentUploaded]);
 
 const uploadComment = async (postId, userId, comment , userImg) => {
   try {
@@ -33,9 +35,10 @@ const uploadComment = async (postId, userId, comment , userImg) => {
       comment: comment,
       userImg: userImg
     });
-
+    setCommentUploaded(!commentUploaded)
     if (response.data.message) {
       console.log('Comment uploaded:', response.data.comment);
+      
     }
   } catch (error) {
     console.error('Error uploading comment:', error);
