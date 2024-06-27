@@ -25,6 +25,11 @@ const Profile = () => {
     fetchPosts();
   }, [session]);
 
+  const deletePost = (postId) => {
+    setPosts(posts.filter(post => post._id !== postId));
+  };
+
+
   if (!session) {
     return null;
   }
@@ -39,7 +44,7 @@ const Profile = () => {
       </div>
       <div className="profile-posts">
         {posts.map((post) => (
-          <Post key={post._id} post={post} />
+          <Post key={post._id} post={post} deletePost={deletePost}/>
         ))}
       </div>
     </div>

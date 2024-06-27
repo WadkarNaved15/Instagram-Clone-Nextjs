@@ -5,7 +5,8 @@
     top: 4.5rem;
     right: 0;
     border: 1px solid lightgray;
-    overflow-y: scroll;
+    overflow-y: auto;
+    margin-right: 1rem;
    
 }
 .side-profile{
@@ -24,6 +25,7 @@
 .username{
     color: black;
     text-decoration: none;
+    word-wrap: break-word;
 }
 .posts{
     display: flex;
@@ -31,17 +33,10 @@
     align-items: center;
     width: 100%;
     padding: 0.2rem;
-    border: 1px solid lightgray;
 }
 .image{
     height: 15rem;
     width: 100%;
     object-fit: cover;
     padding: 1rem;
-}
-.sign-out-btn{
-    border: none;
-    outline: none;
-    background-color: white;
-    color: blue;
 }

@@ -7,27 +7,19 @@ import "./styles/FeedPosts.css"
 
 
 
-const FeedPosts = () => {
-    
-    const [posts, setPosts] = useState([]);
+const FeedPosts = ({posts,deletePost}) => {
+    if(!posts) {
+        return (
+            <div>
+                <h4>No Posts</h4>
+            </div>
+        )
+    }
 
-    useEffect(() => {
-        const getPosts = async () => {
-            try {
-                const response = await axios.get('/api/allposts');
-                const data = await response.data;
-                setPosts(data);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-        };
-         getPosts();
-
-    }, []);
   return (
     <div className='feed-posts'>
         {posts.map((post) => (
-            <Post key={post._id} post={post} />
+            <Post key={post._id} post={post} deletePost={deletePost} />
         ))}
     </div>
   )

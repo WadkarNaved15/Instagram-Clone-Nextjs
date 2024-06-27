@@ -1,17 +1,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "./styles/Post.css";
-import { useSession } from "next-auth/react";
+import { useSession,getSession } from "next-auth/react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import axios from "axios";
 import Comments from "./Comments";
 
-const Post = ({ post }) => {
+const Post = ({ post ,deletePost}) => {
   const { data: session } = useSession();
+   console.log(session)
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(post.likes.length);
   const [isUpdating, setIsUpdating] = useState(false); 
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false)
 
   useEffect(() => {
     if (session && post.likes.includes(session.user.username)) {
@@ -56,11 +57,12 @@ const Post = ({ post }) => {
         public_id: post.public_id
       }
       });
+      await axios
+      deletePost(postId);
     } catch (error) {
       console.error('Error deleting post:', error);
       setIsDeleting(false);
     }
-    location.reload()
   };
 
   return (

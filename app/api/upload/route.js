@@ -44,17 +44,20 @@ export async function DELETE(req, res) {
   try {
     const { id , public_id} = await req.json(); 
     const { client, db } = await connectToDatabase();
-    const collection = db.collection('Posts'); 
+    const postCollection = db.collection('Posts'); 
+    const commentCollection = db.collection('Comments');
 
     const dimage = await deleteImage(public_id);
     
-    const result = await collection.deleteOne({ _id:new ObjectId(id) });
-
-    if (result.deletedCount !== 1) {
+    const postresult = await postCollection.deleteOne({ _id:new ObjectId(id) });
+    if (postresult.deletedCount !== 1) {
         
       return NextResponse.json({ success: false, message: 'Post not found in database' }, { status: 404 });
       
     }
+    const commentresult = await commentCollection.deleteMany({ postId: id });
+
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting post and file:', error);

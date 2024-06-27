@@ -8,13 +8,13 @@ import { getSession } from 'next-auth/react';
 import './styles/UploadModal.css';
 
 
-const UploadModal = ({ isOpen, onClose }) => {
+const UploadModal = ({ isOpen, onClose ,onUploadSuccess}) => {
   const session = getSession();
   const [file, setFile] = useState(null);
   const [caption, setCaption] = useState('');
   const[ImageUrl, setImageUrl] = useState(null);
   const [uploading, setUploading] = useState(false);
-const ImageRef = useRef(null);
+  const ImageRef = useRef(null);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -35,15 +35,11 @@ const ImageRef = useRef(null);
     formData.append("imageUrl", ImageUrl);
     setUploading(true);
     const response = await axios.post('/api/upload', formData);
-
-    if (response.data.success) {  
-      setFile(null);
-      setCaption('');
-      setImageUrl(null);
-      
-    }
-    location.reload();
     setUploading(false);
+    setFile(null);
+    setCaption('');
+    setImageUrl(null);
+    onUploadSuccess()
     onClose();
 
   };

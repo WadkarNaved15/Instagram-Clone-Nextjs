@@ -1,27 +1,36 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import { useSession, signOut } from 'next-auth/react'
+import { useSession} from 'next-auth/react'
 import Link from 'next/link'
+import PostButton from './PostButton';
 import axios from 'axios'
+
 import "./styles/SideProfile.css"
 
-const SideProfile = () => {
+const SideProfile = ({refreshPosts,setOpen}) => {
   const { data: session } = useSession();
+  console.log(session?.user.image)
   const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get('/api/posts');
-        const data = await response.data;
-        setPosts(data);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
-    };
 
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get('/api/posts');
+      const data = await response.data;
+      setPosts(data);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
+  useEffect(() => {
     fetchPosts();
   }, []);
+
+  useEffect(() => {
+    if(refreshPosts) {
+      fetchPosts();
+    }
+  }, [refreshPosts]);
 
   if (!session) {
     return null;
@@ -32,20 +41,16 @@ const SideProfile = () => {
       <div className="side-profile">
         <div>
           <Link href="/profile">
-            <img className="side-profile-img" src={session.user.image} alt={session.user.name} />
+            <img className='side-profile-img' src={session?.user.image} alt={session?.user.name} />
           </Link>
         </div>
         
         <div className="profile-name">
             <Link href="/profile">
-                <h3 className="username">{session.user.name}</h3>
+                <h4 className="username">{session.user.name}</h4>
             </Link>
         </div>
-        <div className="sign-out">
-          <button className="sign-out-btn" onClick={() => {
-            signOut();
-          }}>Sign Out</button>
-        </div>
+        <PostButton setOpen={setOpen}></PostButton>
       </div>
       <div className="personal-posts">
         <div className="posts">
