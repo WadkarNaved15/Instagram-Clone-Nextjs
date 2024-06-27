@@ -9,7 +9,6 @@ import "./styles/SideProfile.css"
 
 const SideProfile = ({refreshPosts,setOpen}) => {
   const { data: session } = useSession();
-  console.log(session?.user.image)
   const [posts, setPosts] = useState([]);
 
 
@@ -31,6 +30,7 @@ const SideProfile = ({refreshPosts,setOpen}) => {
       fetchPosts();
     }
   }, [refreshPosts]);
+  
 
   if (!session) {
     return null;
@@ -56,7 +56,17 @@ const SideProfile = ({refreshPosts,setOpen}) => {
         <div className="posts">
           {posts.map((post) => (
             <div key={post._id} className='side-post'>
-              <img className="image" src={post.imageUrl} alt={post.caption} />
+              {post.fileType.startsWith("image/") ?  (
+                  <img className="image" src={post.imageUrl} alt={post.caption} />
+                ): (
+                  <video className="image" controls>
+                    <source src={post.imageUrl} type="video/mp4" />
+                    <source src={post.imageUrl} type="video/webm" />
+                    <source src={post.imageUrl} type="video/ogg" />
+                    Your browser does not support the video tag.
+                  </video>
+        )
+      }
             </div>
           ))}
         </div>

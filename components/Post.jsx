@@ -8,7 +8,6 @@ import Comments from "./Comments";
 
 const Post = ({ post ,deletePost}) => {
   const { data: session } = useSession();
-   console.log(session)
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(post.likes.length);
   const [isUpdating, setIsUpdating] = useState(false); 
@@ -52,19 +51,20 @@ const Post = ({ post ,deletePost}) => {
   const handleSubmit = async (postId) => {
     try {
       setIsDeleting(true);
-      await axios.delete('/api/upload',{data:{
-        id: post._id,
-        public_id: post.public_id
-      }
+      await axios.delete('/api/upload', {
+        data: {
+          id: post._id,
+          public_id: post.public_id
+        }
       });
-      await axios
-      deletePost(postId);
+      await deletePost(postId);
     } catch (error) {
       console.error('Error deleting post:', error);
       setIsDeleting(false);
     }
   };
 
+  
   return (
     <div className="main-post">
       <div className="post-header">
@@ -76,7 +76,17 @@ const Post = ({ post ,deletePost}) => {
         <button disabled={isDeleting} onClick={() => handleSubmit(post._id)} className="delete-btn">{isDeleting ? 'Deleting...' : 'Delete'}</button>) : null}
       </div>
       <div className="post-img-container">
-        <img className="post-img" src={post.imageUrl} alt={post.caption} />
+      {post.fileType.startsWith("image/") ?  (
+          <img className="post-img" src={post.imageUrl} alt={post.caption} />
+        ): (
+          <video className="post-img" controls>
+             <source src={post.imageUrl} type="video/mp4" />
+             <source src={post.imageUrl} type="video/webm" />
+             <source src={post.imageUrl} type="video/ogg" />
+             Your browser does not support the video tag.
+          </video>
+        )
+      }
       </div>
       <div className="interaction">
         <div className="likes-container">

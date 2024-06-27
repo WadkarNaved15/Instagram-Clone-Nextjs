@@ -12,7 +12,8 @@ const UploadModal = ({ isOpen, onClose ,onUploadSuccess}) => {
   const session = getSession();
   const [file, setFile] = useState(null);
   const [caption, setCaption] = useState('');
-  const[ImageUrl, setImageUrl] = useState(null);
+  const[fileUrl, setFileUrl] = useState(null);
+  const [fileType, setFileType] = useState(null);
   const [uploading, setUploading] = useState(false);
   const ImageRef = useRef(null);
 
@@ -21,7 +22,8 @@ const UploadModal = ({ isOpen, onClose ,onUploadSuccess}) => {
     if (selectedFile && selectedFile.size <= 5 * 1024 * 1024) {
       // 5MB size limit
       setFile(selectedFile);
-      setImageUrl(URL.createObjectURL(selectedFile));
+      setFileType(selectedFile.type);
+      setFileUrl(URL.createObjectURL(selectedFile));
 
     } else {
       alert('File size should be 5MB or less.');
@@ -32,13 +34,13 @@ const UploadModal = ({ isOpen, onClose ,onUploadSuccess}) => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('caption', caption);
-    formData.append("imageUrl", ImageUrl);
+    formData.append("fileType", fileType);
     setUploading(true);
     const response = await axios.post('/api/upload', formData);
     setUploading(false);
     setFile(null);
     setCaption('');
-    setImageUrl(null);
+    setFileUrl('');
     onUploadSuccess()
     onClose();
 
@@ -51,7 +53,14 @@ const UploadModal = ({ isOpen, onClose ,onUploadSuccess}) => {
       <MdCancel className="cancel" size={20} onClick={onClose} />
       <form className="form" method='post' action='/api/upload'>
       {file ? <>
-      <img className='img' src={ImageUrl} alt="Preview" />
+        {fileType.startsWith("image/") ? (
+              <img className='img' src={fileUrl} alt="Preview" />
+            ) : (
+              <video className='video' controls>
+                <source src={fileUrl} type={fileType} />
+                Your browser does not support the video tag.
+              </video>
+            )}
       <button className='remove' onClick={() => setFile(null)}>Remove</button>
       </>
       :

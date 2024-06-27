@@ -12,13 +12,13 @@ export async function POST(req, res) {
     const data = await req.formData();
     const file = data.get('file');
     const caption = data.get('caption');
-    const imageUrl = data.get('imageUrl');
+    const fileType = data.get('fileType');
 
     if (!file) {
         return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
     try{
-        const image = await uploadImage(file);
+        const fileUpload = await uploadImage(file);
         const { client, db } = await connectToDatabase();
         const collection = db.collection('Posts'); 
     
@@ -26,8 +26,9 @@ export async function POST(req, res) {
             username : session.user.name,
             profileId : session.user.email.split('@')[0],
             profileImg : session.user.image,
-            imageUrl : image?.secure_url,
-            public_id : image?.public_id,
+            imageUrl : fileUpload?.secure_url,
+            fileType : fileType,
+            public_id : fileUpload?.public_id,
             caption: caption || '',
             likes : [],
             uploadedAt: new Date(),
