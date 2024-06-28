@@ -15,7 +15,7 @@ export async function GET(req) {
     const collection = db.collection('Comments'); 
 
     // Find comments for the given postId
-    const comments = await collection.find({ postId: postId }).sort({ createdAt: -1 }).toArray();
+    const comments = await collection.find({ postId: postId }).sort({ commentedAt: -1 }).toArray();
 
     return NextResponse.json({ comments }, { status: 200 });
   } catch (error) {

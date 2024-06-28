@@ -1,6 +1,7 @@
 import React, { useState , useEffect} from 'react';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
+import { formatDistanceToNow } from 'date-fns';
 import './styles/Comments.css';
 const CommentForm = ({ postId }) => {
   const { data: session } = useSession();
@@ -67,9 +68,14 @@ const uploadComment = async (postId, userId, comment , userImg) => {
       
       {comments.map((comment) => (
         <div className='comment-data' key={comment._id}>
-          <img className='commentor-profile-img' src={comment.userImg} alt={comment.username} />
+          <div className='commentor-info'>
+            <img className='commentor-profile-img' src={comment.userImg} alt={comment.username} />
             <h5 className='commentor-username'>{`${comment.userId} : ` }</h5>
-            <p className='commentor-text'>{comment.comment}</p>
+          </div>
+          <div className='commentor-comment'>
+            <p className='commentor-text'>{<br/>}{comment.comment}</p>
+            <p className='commentor-date'>{formatDistanceToNow(new Date(comment.commentedAt), { addSuffix: true })}</p>
+        </div>
         </div>
       ))}
     </div>
