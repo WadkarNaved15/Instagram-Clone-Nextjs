@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "./styles/Post.css";
 import { useSession,getSession } from "next-auth/react";
+import Link from "next/link";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import axios from "axios";
 import Comments from "./Comments";
@@ -69,8 +70,12 @@ const Post = ({ post ,deletePost}) => {
     <div className="main-post">
       <div className="post-header">
         <div className="post-header-left">
-          <img className="main-profile-img" src={post.profileImg} alt={post.profileId} />
-          <h3 className="main-profile-name">{post.profileId}</h3>
+          <Link href={`/profile/${post.profileId}`} className="main-profile-link">
+            <img className="main-profile-img" src={post.profileImg} alt={post.profileId} />
+          </Link>
+          <Link href={`/profile/${post.profileId}`} className="main-profile-link">
+            <h3 className="main-profile-name">{post.profileId}</h3>
+          </Link>       
         </div>
         {session && session.user.username === post.profileId ? (
         <button disabled={isDeleting} onClick={() => handleSubmit(post._id)} className="delete-btn">{isDeleting ? 'Deleting...' : 'Delete'}</button>) : null}

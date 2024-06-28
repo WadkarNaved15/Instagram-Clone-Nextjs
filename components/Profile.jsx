@@ -3,18 +3,21 @@ import React, { useState, useEffect } from 'react';
 import { useSession , signOut} from 'next-auth/react';
 import axios from 'axios';
 import Post from '@/components/Post';
-import "@/components/styles/Profile.css";
+import "./styles/Profile.css";
 
-const Profile = () => {
+const Profile = ({profileId}) => {
   const { data: session } = useSession();
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     if (!session) return;
 
+   
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('/api/posts');
+        const response = await axios.post('/api/posts',{
+          profileId: profileId || session.user.username
+        });
         const data = response.data;
         setPosts(data);
       } catch (error) {

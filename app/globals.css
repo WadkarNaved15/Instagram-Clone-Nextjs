@@ -1,0 +1,13 @@
+/* In globals.css */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button:disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+    color: rgb(48, 47, 47);
+    padding: 0.5rem;
+}

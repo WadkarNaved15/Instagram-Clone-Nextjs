@@ -34,14 +34,6 @@
 button:hover{
     cursor: pointer;
 }
-button:disabled{
-    cursor: not-allowed;
-    opacity: 0.5;
-    pointer-events: none;
-    background-color: lightgray;
-    color: black;
-    padding: 0.5rem;
-}
 
 
 @media (max-width: 768px) {

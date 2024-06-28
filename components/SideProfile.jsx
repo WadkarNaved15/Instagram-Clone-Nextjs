@@ -14,7 +14,9 @@ const SideProfile = ({refreshPosts,setOpen}) => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('/api/posts');
+      const response = await axios.post('/api/posts',{
+        publicId: session?.user.email.split('@')[0]
+      });
       const data = await response.data;
       setPosts(data);
     } catch (error) {

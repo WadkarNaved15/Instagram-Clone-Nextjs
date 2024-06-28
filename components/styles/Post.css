@@ -35,6 +35,8 @@
 }
 .main-profile-name{
     margin-left: 1.5rem;
+    text-decoration: none;
+    color: black;
 }
 .post-header-left{
     display: flex;

@@ -23,8 +23,6 @@
     border-radius: 50%;
 }
 .username{
-    color: black;
-    text-decoration: none;
     word-wrap: break-word;
 }
 .posts{

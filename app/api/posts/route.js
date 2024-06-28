@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth';
 import { connectToDatabase } from '@/lib/mongodb';
 
 async function handler(req, res) {
-  if (req.method !== 'GET') {
+  if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
@@ -13,9 +13,8 @@ async function handler(req, res) {
     if (!session?.user?.email) {
       throw new Error('User session or email not found');
     }
-
-    const profileId = session.user.email.split('@')[0];
-
+    const data = await req.json()
+    const profileId = data.profileId 
     const { client, db } = await connectToDatabase();
     const collection = db.collection('Posts');
 
@@ -27,4 +26,4 @@ async function handler(req, res) {
   }
 }
 
-export { handler as GET };
+export { handler as POST };
