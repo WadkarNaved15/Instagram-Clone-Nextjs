@@ -29,7 +29,7 @@ const Header = () => {
                     signOut();
                 }}>Sign Out</button>
             </div>
-            <Link href="/profile"><img className='header-profile-img' src={session.user.image} alt={session.user.name} /></Link>
+            <Link href={`/profile/${session.user.username}`}><img className='header-profile-img' src={session.user.image} alt={session.user.name} /></Link>
             </> :
             <button className='login-btn' onClick={() => signIn()} >Log In</button>}
         </div>
