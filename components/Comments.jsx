@@ -56,9 +56,7 @@ const uploadComment = async (postId, userId, comment , userImg) => {
     const commentText = comment;
     setComment('');
 
-    if (!session) {
-      return alert('You must be logged in to comment.');
-    }
+
 
     const userId = session.user.username;
     const userImg = session.user.image
@@ -93,7 +91,7 @@ const uploadComment = async (postId, userId, comment , userImg) => {
             <h5 className='commentor-username'>{`${comment.userId} : ` }</h5>
             
           </div>
-          {session.user.username === comment.userId ? <button disabled={deletingCommentId === comment._id} className='delete-comment-btn' onClick={() => deleteComment(comment._id)}>{(deletingCommentId === comment._id ) ?  'Deleting...' : 'Delete'}</button> : null}
+          {(session && session.user.username === comment.userId) ? <button disabled={deletingCommentId === comment._id} className='delete-comment-btn' onClick={() => deleteComment(comment._id)}>{(deletingCommentId === comment._id ) ?  'Deleting...' : 'Delete'}</button> : null}
           </div>
 
           <div className='commentor-comment'>
@@ -103,6 +101,7 @@ const uploadComment = async (postId, userId, comment , userImg) => {
         </div>
       ))}
     </div>
+    {session ? (
     <form className='comment-form' onSubmit={handleSubmit}>
       <img className='comment-profile-img' src={session.user.image} alt={session.user.username} />
       <input
@@ -114,7 +113,7 @@ const uploadComment = async (postId, userId, comment , userImg) => {
         onChange={(e) => setComment(e.target.value)}
       />
       <button disabled={!comment} className='comment-btn' type="submit">{uploadingComment ? 'Commneting...' : 'Comment'}</button>
-    </form>
+    </form>) : null}
     </>
   );
 };

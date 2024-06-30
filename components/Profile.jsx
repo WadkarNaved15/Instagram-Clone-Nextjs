@@ -36,21 +36,31 @@ const Profile = ({profileId}) => {
   if (!session) {
     return null;
   }
-
   return (
+    <>{posts.length === 0 ? <>
     <div className="profile-page">
       <div className="profile">
-        <img className="profile-img" src={session.user.image} alt={session.user.name} />
+        <img className="profile-img" src={session.user.image} alt={session.user.username} />
         <h3>{session.user.name}</h3>
         <p className="profile-username">{`username : ${session.user.username}`}</p>
         <button className="logout-btn" onClick={() => signOut()}>Logout</button>
+      </div>
+    </div>
+      </> :
+    <div className="profile-page">
+      <div className="profile">
+        <img className="profile-img" src={posts[0].profileImg} alt={posts[0].profileId} />
+        <h3>{posts[0].username}</h3>
+        <p className="profile-username">{`username : ${posts[0].profileId}`}</p>
+        {session.user.username === posts[0].profileId && <button className="logout-btn" onClick={() => signOut()}>Logout</button>}
       </div>
       <div className="profile-posts">
         {posts.map((post) => (
           <Post key={post._id} post={post} deletePost={deletePost}/>
         ))}
       </div>
-    </div>
+    </div>}
+    </>
   );
 };
 

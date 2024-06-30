@@ -70,10 +70,10 @@ const Post = ({ post ,deletePost}) => {
     <div className="main-post">
       <div className="post-header">
         <div className="post-header-left">
-          <Link href={`/profile/${post.profileId}`} className="main-profile-link">
+          <Link href={session ? `/profile/${post.profileId}` : '/'} className="main-profile-link">
             <img className="main-profile-img" src={post.profileImg} alt={post.profileId} />
           </Link>
-          <Link href={`/profile/${post.profileId}`} className="main-profile-link">
+          <Link href={session ? `/profile/${post.profileId}` : '/'} className="main-profile-link">
             <h3 className="main-profile-name">{post.profileId}</h3>
           </Link>       
         </div>
@@ -106,7 +106,7 @@ const Post = ({ post ,deletePost}) => {
           <h4>{post.profileId}: </h4>
           <p className="caption">{post.caption}</p>
         </div>
-        {session ? <Comments postId={post._id}></Comments> : null}
+       <Comments postId={post._id}></Comments> 
          
       </div>
     </div>
