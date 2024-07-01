@@ -1,8 +1,8 @@
 import { connectToDatabase } from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
-export async function GET(req, res) {
-  if (req.method !== 'GET') {
+export async function POST(req, res) {
+  if (req.method !== 'POST') {
     return NextResponse.json({ message: 'Method Not Allowed' }, { status: 405 });
   }
 
